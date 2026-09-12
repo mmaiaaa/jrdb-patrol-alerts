@@ -1,0 +1,91 @@
+JRDB METHOD FREEZE MANIFEST
+Created: 2026-09-13T00:14:50+04:00
+
+===== PRE-FREEZE GIT HEAD =====
+e123e5c0e4b1a6d5356e9d447c07f345ffdc17ce
+
+===== IMPLEMENTATION CONSTANTS =====
+
+--- scripts/cache_jrdb_dev_sensor_depth_candidates.py ---
+26:SEQUENCE = "cubberly-auditorium-2019-04-22_0"
+27:FRAMES = ("000087", "000432", "000864", "001295")
+28:BIN_WIDTH_M = 0.5
+29:MAX_RANGE_M = 20.0
+30:MIN_BIN_POINTS = 3
+31:MIN_BAND_POINTS = 8
+32:DOMINANCE_RATIO = 2.0
+33:FIELDS = ("frame", "camera", "box_index", "confidence", "xyxy",
+
+--- scripts/evaluate_jrdb_dev_surface_candidates_offline.py ---
+24:SEQUENCE = "cubberly-auditorium-2019-04-22_0"
+25:CAMERAS = (0, 2, 4, 6, 8)
+26:MIN_IOU = 0.5
+27:NEAR_RADIUS_M = 3.0
+28:FIELDS = ("frame", "camera", "box_index", "label_id", "box_iou",
+
+--- scripts/prepare_jrdb_dev_blinded_review.py ---
+19:SEQUENCE = "cubberly-auditorium-2019-04-22_0"
+20:QUOTAS = {
+28:REVIEW_FIELDS = ("case_id", "sequence", "frame", "camera", "detector_box_xyxy",
+32:KEY_FIELDS = ("case_id", "reason", "frame", "camera", "box_index", "label_id",
+
+--- scripts/render_jrdb_blinded_review_cases.py ---
+32:SEQUENCE = "cubberly-auditorium-2019-04-22_0"
+33:REQUIRED_REVIEW = {"case_id", "sequence", "frame", "camera", "detector_box_xyxy"}
+34:REQUIRED_SENSOR = {"frame", "camera", "box_index", "xyxy", "confidence",
+
+--- scripts/audit_jrdb_dev_box_geometry.py ---
+21:DEFAULT_FRAMES = ("000087", "000432", "000864", "001295")
+22:FIELDS = ("frame", "label_id", "center_xy_radius_m", "reported_num_points",
+
+--- scripts/run_jrdb_dev_surface_full_batched.py ---
+21:SEQUENCE = "cubberly-auditorium-2019-04-22_0"
+22:FRAMES = tuple(f"{frame:06d}" for frame in range(1296))
+23:CAMERAS = (0, 2, 4, 6, 8)
+24:PILOT_PREDICTIONS_SHA256 = "2e13fa212e647561765f0cc203ec60fd658e6377c6a7c655200700beddc56a16"
+
+===== JRDB SCRIPT HASHES =====
+d429428f6b69022b969076f3add2bb94640c643e08721bc4966003396b07870c  scripts/analyze_jrdb_dev_surface_discrepancies.py
+61a1eed155c33a83a4e875057ab8061fa89d16b5942f38dd2796e71b1dc8554b  scripts/analyze_jrdb_dev_surface_discrepancies_v2.py
+82747cd9676b40f30af988ef49f8da4b16bd0ce0b12191716aa30955063b782c  scripts/audit_jrdb_archives.py
+17f18f6b42589e60b978ecf303c23b0dbcfceeb5a9847d31c5971ede2afe8b7a  scripts/audit_jrdb_box_depth_support.py
+0f8dedc87137b592d2bb29b19fc34e3ca212777febc569059123580180f61e52  scripts/audit_jrdb_cubberly_projection.py
+beada64e0ce7ef7f0490b9257330a7c5913d3239e65b617bdb59519940f2153f  scripts/audit_jrdb_dev_boundaries.py
+af6e5689b8de237d9dd98249d98f12b7afa84ea8af16a29a17cf60738bb678e9  scripts/audit_jrdb_dev_box_geometry.py
+edae5ca3b89cf2699d30fc1f8c72b69c7a572fcf6d25cafcef2264c25be90939  scripts/audit_jrdb_dev_dual_lidar_geometry.py
+9cf706c0f1f9ae3ca964692bb2ada9410407cec9642654a1dcb774ba5874772d  scripts/audit_jrdb_dev_native_2d_3d_reprojection.py
+71d650241709d36a26588cd476ca4f4b8d1776fc5f59602cbdb2c3d5e63c7b70  scripts/audit_jrdb_dev_threshold_crossings.py
+88e00a0c9980bc38ca9f667ac5566a2020563beb216fb6a77ddb9f474fb515ad  scripts/audit_jrdb_dev_threshold_crossings_v2.py
+2af9a194fa6cc3001e3ccb8bdc2addfdfe4fbed0fe097e38da62b20a586acc17  scripts/audit_jrdb_five_camera_projection.py
+41005eb7e89b3bd23ba19cc6641cfadaed054e16f562b1ead29cb078575f554d  scripts/audit_jrdb_native_view_coverage.py
+18ce9584ad5badf2157f779099c4c71e921b9e0b76efe892e5f0e18bfcd65c56  scripts/audit_jrdb_pilot_labels.py
+b79a63562f0c140991d76fa61a2c0f90423de682c3ba19e009d248d629b98f1f  scripts/audit_jrdb_stitched_pilot.py
+4b28b174f705ebe8b0486209750e2ff3483c99e5c645fcbb4dccd0549f45747f  scripts/cache_jrdb_dev_sensor_depth_candidates.py
+04fc37b4bf18f58ed8a91d87e384253bd29db8283c9833d5232447011dc8c48a  scripts/cache_jrdb_native_detections.py
+9254063c2496e4f104adf8c5226824ce57651be924f347f205dd4bf79f76d27e  scripts/check_jrdb_pilot_pose_coverage.py
+8d684112ce8557f50da103fe961b6b22f25f7dd265ae23db4e4815acf105fc40  scripts/evaluate_jrdb_dev_surface_candidates_offline.py
+fe28a7b89e47047748ceadd540d8c05fdbde291e14ededc714110e80be5f1d31  scripts/extract_jrdb_pilot.py
+6e4adb78f9f8b42ac4dca49fa872c0dd9ab02ed144ce062318557aa439d8f4a5  scripts/inspect_jrdb_dev_activity_social_schema.py
+1384b7d96b0ff7e17e602b88ba3211c5b3f6b8f2f3eb3c765150b84b43521a94  scripts/inspect_jrdb_dev_native_2d_reference.py
+f6c0a04827f694af50a7748a3565dd325e354238fd013c991d68286fc105f7f0  scripts/inspect_jrdb_pilot_reference.py
+f801e105569d761db1afb3aa3ac9b06e04b44db502b2c7f4e105b6033f93bb17  scripts/inventory_jrdb_train_sequences.py
+05480834d6c531f4f9d957bebf2c8b6d060c52a3fe6f088afad3826ec0bfe001  scripts/list_jrdb_pilot_candidate_runs.py
+083b14afcc16379808394beaf86364a996d76e2ea0a807ec3ea5275e4c473e93  scripts/prepare_jrdb_dev_blinded_review.py
+ebebff2c4ad84fb1cc2991e8f6661bc17f7691c9f0321dc72f19eafcdfaff0e3  scripts/prepare_jrdb_holdout_sensors.py
+3141bf68ae72e6cc5f7bb09d9d1bff2ff6a8f991064081ff7fbf37e960637469  scripts/prepare_jrdb_moving_dev.py
+50e9efdc34003f6f7d5dfbbb739f4dc369d99d5d393076cc29f9f1541f3ea5ff  scripts/render_jrdb_blinded_review_case_D039_compat.py
+8e7365f909bf4ccf731d5d81f06b464559df4a7f8db45defa78e899c863eed49  scripts/render_jrdb_blinded_review_cases.py
+ae6fc0cf85f1559fbe4469917ab9bb940af5ada1d29e21a87826e4cdcfe39bc5  scripts/review_jrdb_native_detections.py
+504a1de4a401dfaebcc46f914ffdaaa1495f375720204bd2e633f95a91cada8b  scripts/run_jrdb_dev_surface_full_batched.py
+dfa31b070df91846c7efeede8eecf88aa8c60bcda59cf17bb26caa6df4a1868c  scripts/summarize_jrdb_dev_projection.py
+6879b5782fcdf8a9f0ee3f98d4fa4a62432560da3c341d512958f985eedbe212  scripts/visualize_jrdb_dev_3d_box_frame_hypotheses.py
+b03989e52c0c065950ba8669d79583197e367b53f48fd07b456285f66416198f  scripts/visualize_jrdb_reprojection_priority.py
+
+===== CORE INPUT HASHES =====
+2a335b35daf096c0f6bf982addd67de42483cecf83ee197300f7b875dd0e689e  manifests/development_cubberly.json
+092abd7c18f39569f948b8b93ac0e3c907afee7c80471e6e7aaddc57fc169f01  outputs/local/cubberly_sensor_surface_full.csv
+948f903ed8f5113835c28cd65dd7e362cd13be803c1ebd46c23d4fabe1cb121c  outputs/local/cubberly_blinded_review/reviewer_a.csv
+ceff3fbb2187c96d0fc3582792d0e6eaaadece2a4e71179c1f7916846a97e9b8  research_records/cubberly_blinded_review/reviewer_a_completed.xlsx
+
+===== CALIBRATION HASH =====
+ce76679a029bde9b934eaa8781273c3accbf7871ced47294940e79ed92a4ed01  data/jrdb2022/development/cubberly-auditorium-2019-04-22_0/calibration/lidars.yaml
