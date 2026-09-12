@@ -5,6 +5,7 @@ Needs numpy, Pillow, and PyYAML. No detector, reference event, or timing estimat
 """
 import argparse
 import json
+import struct
 from pathlib import Path
 
 import numpy as np
@@ -13,6 +14,7 @@ from PIL import Image, ImageDraw
 
 
 DEFAULT_FRAMES = ("000086", "000087", "000143", "000144", "000222", "000223", "001295")
+MAX_UNCOMPRESSED_BYTES = 128 * 1024 * 1024
 
 
 def read_pcd_header(source):
@@ -33,6 +35,46 @@ def read_pcd_header(source):
     raise ValueError("PCD header exceeds 100 lines")
 
 
+def decode_lzf(payload, expected_size):
+    """Decode PCL's bounded LZF block, including overlapping back-references."""
+    if expected_size > MAX_UNCOMPRESSED_BYTES:
+        raise ValueError("PCD uncompressed block exceeds 128 MiB diagnostic limit")
+    result = bytearray(expected_size)
+    src = dst = 0
+    while src < len(payload):
+        control = payload[src]
+        src += 1
+        if control < 32:
+            count = control + 1
+            if src + count > len(payload) or dst + count > expected_size:
+                raise ValueError("Truncated or oversized LZF literal")
+            result[dst:dst + count] = payload[src:src + count]
+            src += count
+            dst += count
+        else:
+            count = control >> 5
+            high_offset = (control & 31) << 8
+            if count == 7:
+                if src >= len(payload):
+                    raise ValueError("Truncated LZF back-reference length")
+                count += payload[src]
+                src += 1
+            if src >= len(payload):
+                raise ValueError("Truncated LZF back-reference offset")
+            distance = high_offset + payload[src] + 1
+            src += 1
+            count += 2
+            if distance > dst or dst + count > expected_size:
+                raise ValueError("Invalid LZF back-reference or output length")
+            # A reference may overlap bytes produced by the same run.
+            for _ in range(count):
+                result[dst] = result[dst - distance]
+                dst += 1
+    if dst != expected_size:
+        raise ValueError(f"LZF size mismatch: decoded {dst}, declared {expected_size}")
+    return result
+
+
 def read_xyz(path):
     with path.open("rb") as source:
         header = read_pcd_header(source)
@@ -50,7 +92,7 @@ def read_xyz(path):
         if points < 0:
             raise ValueError("Invalid PCD POINTS")
         mode = header["DATA"].lower()
-        if mode == "binary":
+        if mode in {"binary", "binary_compressed"}:
             names, formats, offsets = [], [], []
             offset = 0
             for name, size, kind, count in zip(fields, sizes, kinds, counts):
@@ -65,13 +107,33 @@ def read_xyz(path):
                 offset += size * count
             if any(counts[fields.index(axis)] != 1 for axis in "xyz"):
                 raise ValueError("x, y and z must be scalar PCD fields")
-            remaining = path.stat().st_size - source.tell()
-            if remaining < points * offset:
-                raise ValueError("PCD binary payload shorter than POINTS * point_step")
-            dtype = np.dtype({"names": names, "formats": formats,
-                              "offsets": offsets, "itemsize": offset})
-            data = np.fromfile(source, dtype=dtype, count=points)
-            xyz = np.column_stack([data[axis].astype(np.float64) for axis in "xyz"])
+            if mode == "binary":
+                remaining = path.stat().st_size - source.tell()
+                if remaining < points * offset:
+                    raise ValueError("PCD binary payload shorter than POINTS * point_step")
+                dtype = np.dtype({"names": names, "formats": formats,
+                                  "offsets": offsets, "itemsize": offset})
+                data = np.fromfile(source, dtype=dtype, count=points)
+                xyz = np.column_stack([data[axis].astype(np.float64) for axis in "xyz"])
+            else:
+                lengths = source.read(8)
+                if len(lengths) != 8:
+                    raise ValueError("PCD compressed size header is truncated")
+                compressed_size, uncompressed_size = struct.unpack("<II", lengths)
+                if uncompressed_size != points * offset or uncompressed_size > MAX_UNCOMPRESSED_BYTES:
+                    raise ValueError("PCD uncompressed size disagrees with POINTS/FIELDS or exceeds 128 MiB")
+                if compressed_size > path.stat().st_size - source.tell():
+                    raise ValueError("PCD compressed payload is truncated")
+                planes = decode_lzf(source.read(compressed_size), uncompressed_size)
+                # PCL transposes the point records before LZF: XXX...YYY...ZZZ...
+                plane_start = 0
+                axes = {}
+                for name, fmt, size, count in zip(names, formats, sizes, counts):
+                    if name in {"x", "y", "z"}:
+                        axes[name] = np.frombuffer(planes, dtype=fmt, count=points,
+                                                   offset=plane_start).astype(np.float64)
+                    plane_start += points * size * count
+                xyz = np.column_stack([axes[axis] for axis in "xyz"])
         elif mode == "ascii":
             if any(counts[fields.index(axis)] != 1 for axis in "xyz"):
                 raise ValueError("x, y and z must be scalar PCD fields")
@@ -153,10 +215,13 @@ def main():
             rgb = image.convert("RGB")
         header = {}
         try:
+            with cloud_path.open("rb") as cloud:
+                header = read_pcd_header(cloud)
             header, points = read_xyz(cloud_path)
             uv, ranges, counts = project(points, sensor, rgb.size)
         except ValueError as error:
             report["images"].append({"frame": stem, "pcd_data": header.get("DATA"),
+                                     "pcd_fields": header.get("FIELDS"),
                                      "status": "unsupported_or_invalid", "reason": str(error)})
             continue
         # Fixed subsampling only changes preview density; counts above use all points.
