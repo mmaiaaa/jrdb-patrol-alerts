@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Inspect stitched JRDB pose coverage; overlay only when image dimensions agree."""
+"""Inspect stitched JRDB pose coverage; optionally draw a diagnostic overlay."""
 import argparse
 import io
 import json
@@ -18,6 +18,8 @@ def main():
     parser.add_argument("--labels-zip", type=Path, default=Path.home() / "Downloads/labels.zip")
     parser.add_argument("--images-zip", type=Path, default=Path.home() / "Downloads/train_images.zip")
     parser.add_argument("--output-dir", type=Path, default=Path("outputs/local"))
+    parser.add_argument("--diagnostic-overlay", action="store_true",
+                        help="Draw keypoints on native JPEG despite mismatched pose width metadata; visual inspection only")
     args = parser.parse_args()
     manifest = json.loads(args.manifest.read_text())
     sequence = manifest["sequence"]
@@ -140,12 +142,18 @@ def main():
         "overlay_path": None,
         "note": "A 752-wide pose row for a 3760-wide stitched JPEG is a metadata discrepancy, not proof of the keypoint coordinate convention. No visibility event labels are defined here.",
     }
-    if (source.get("width"), source.get("height")) != image.size:
+    mismatched_size = (source.get("width"), source.get("height")) != image.size
+    if mismatched_size and not args.diagnostic_overlay:
         report["overlay_status"] = "skipped_dimension_mismatch"
         print(json.dumps(report, indent=2))
         return
+    if mismatched_size and not coordinate_counts["inside_jpeg_beyond_metadata_width"]:
+        raise ValueError("No keypoint evidence beyond pose metadata width; cannot draw diagnostic overlay")
 
     draw = ImageDraw.Draw(image)
+    if mismatched_size:
+        draw.rectangle((0, 0, min(image.width - 1, 700), 23), fill="black")
+        draw.text((5, 5), "DIAGNOSTIC ONLY: pose width 752 != stitched JPEG width 3760", fill="white")
     drawn_keypoints = 0
     for item in annotated[frame]:
         coords = item.get("keypoints", [])
@@ -174,9 +182,13 @@ def main():
     args.output_dir.mkdir(parents=True, exist_ok=True)
     overlay = args.output_dir / f"{sequence}_stitched_pose_{frame}.png"
     image.save(overlay)
-    report["overlay_status"] = "generated_metadata_dimensions_match"
+    report["overlay_status"] = (
+        "generated_diagnostic_despite_metadata_mismatch" if mismatched_size
+        else "generated_metadata_dimensions_match"
+    )
     report["overlay_path"] = str(overlay)
     report["overlay_visible_or_occluded_keypoints"] = drawn_keypoints
+    report["overlay_interpretation"] = "Visual registration check only; no validated reference labels or performance results."
     print(json.dumps(report, indent=2))
 
 
