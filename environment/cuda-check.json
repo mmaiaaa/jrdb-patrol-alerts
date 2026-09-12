@@ -1,0 +1,16 @@
+{
+  "recorded_utc": "2026-09-12T12:23:10.435216+00:00",
+  "python": "3.12.14",
+  "torch": "2.13.0+cu126",
+  "torchvision": "0.28.0+cu126",
+  "torch_cuda_build": "12.6",
+  "gpu": "NVIDIA GeForce RTX 2060",
+  "compute_capability": [
+    7,
+    5
+  ],
+  "gpu_memory_bytes": 6014369792,
+  "matrix_multiplication": "PASS",
+  "torchvision_cuda_nms": "PASS",
+  "scope": "Functional GPU check; no inference benchmark performed."
+}
