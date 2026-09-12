@@ -1,0 +1,30 @@
+{
+  "sequence": "memorial-court-2019-03-16_0",
+  "role": "sensor_outputs_frozen_before_reference_opening",
+  "method_freeze": "jrdb-method-freeze-2026-09-12",
+  "files": {
+    "detections": {
+      "path": "outputs/local/memorial_court_holdout/memorial_native_full.jsonl",
+      "sha256": "d2d86947287c3e05654c8ec9913445990bebcb3b36b1b9cc841e1d593df36f13",
+      "bytes": 3444602
+    },
+    "detection_summary": {
+      "path": "outputs/local/memorial_court_holdout/memorial_native_detection_summary.json",
+      "sha256": "8981c030f899cdddf2cca40fb4dfd1f9f4f6747e718d42ff3412305612ec1b6a",
+      "bytes": 1498
+    },
+    "surface_candidates": {
+      "path": "outputs/local/memorial_court_holdout/memorial_sensor_surface_full.csv",
+      "sha256": "8d3bd65efdc9fc1033cc611a38c67653ada8971a0eef1b9f5332847aabce9e51",
+      "bytes": 3647362
+    },
+    "surface_summary": {
+      "path": "outputs/local/memorial_court_holdout/memorial_sensor_surface_summary.json",
+      "sha256": "39ed9d9605bc891bce23dc6b38ac15da7a666e65a94606e0ca6bbc3f2767dad0",
+      "bytes": 16529
+    }
+  },
+  "reference_archive_opened": false,
+  "reference_annotations_inspected": false,
+  "note": "Created before Memorial Court reference labels were opened. No result-driven tuning permitted."
+}
