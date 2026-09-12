@@ -1,0 +1,13 @@
+{
+  "sequence": "memorial-court-2019-03-16_0",
+  "role": "frozen_holdout_scoring",
+  "development_sequence": "cubberly-auditorium-2019-04-22_0",
+  "method_freeze_commit": "3f9a8daadb832a6c6ea9251869b83be2a28c2746",
+  "method_freeze_tag": "jrdb-method-freeze-2026-09-12",
+  "label_3d": "labels/labels_3d/memorial-court-2019-03-16_0.json",
+  "matching_2d_iou_threshold": 0.5,
+  "near_radius_m": 3.0,
+  "candidate_abstentions_remain_abstentions": true,
+  "unlinked_detector_boxes_reported_separately": true,
+  "post_reference_tuning_allowed": false
+}
