@@ -1,0 +1,19 @@
+{
+  "release": "JRDB 2022 train download (operator reported)",
+  "sequence": "bytes-cafe-2019-02-07_0",
+  "camera_view": "image_0",
+  "frame_counts": {
+    "image": 1726,
+    "upper": 1726,
+    "lower": 1726
+  },
+  "common_filename_frame_ids": 1726,
+  "label_3d": "labels/labels_3d/bytes-cafe-2019-02-07_0.json",
+  "calibration_files": [
+    "calibration/cameras.yaml",
+    "calibration/defaults.yaml",
+    "calibration/lidars.yaml"
+  ],
+  "selected_uncompressed_bytes": 1061437112,
+  "note": "Shared filename IDs do not establish timestamp or 3D projection accuracy."
+}

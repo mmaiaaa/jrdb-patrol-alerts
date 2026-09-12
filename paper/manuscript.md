@@ -52,6 +52,8 @@ Comparisons will include raw entry thresholding, time persistence, hysteresis wi
 
 **5. Experimental design — proposed.**
 
+Acquisition checkpoint (12 September 2026; development pilot): The JRDB 2022 train archives yielded sequence `bytes-cafe-2019-02-07_0` with 1726 native `image_0` frames, 1726 upper and 1726 lower LiDAR frames, one 3D-label JSON, and three calibration YAML files. The workstation uses an RTX 2060 with 6 GB VRAM; CUDA matrix multiplication and torchvision GPU NMS passed on PyTorch 2.13.0. Timestamp, 3D projection, detector accuracy, and inference-speed validation remain pending.
+
 The exact JRDB release, selected sequences, independent recording groups, and sensor streams will be published in the manifest. Development data will support implementation and uncertainty fitting; validation data will select operating points; an untouched final test will support the primary empirical claim. The official release split will be distinguished from any custom location/session holdout. Different sequence names will not be assumed to establish location independence.
 
 All compared alert methods will receive the same sensor predictions, reference events, eligibility rules, and evaluation implementation. Simpler baselines will receive a meaningful tuning budget. Configurations will be selected to reduce false alerts per monitored hour subject to justified recall and delay requirements, with infeasible methods reported as such. The numerical requirements, primary comparison, matching gates, and statistical analysis will be frozen before final-test inspection.
