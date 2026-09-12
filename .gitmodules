@@ -1,0 +1,3 @@
+[submodule "external/jrdb_toolkit"]
+	path = external/jrdb_toolkit
+	url = https://github.com/JRDB-dataset/jrdb_toolkit.git
