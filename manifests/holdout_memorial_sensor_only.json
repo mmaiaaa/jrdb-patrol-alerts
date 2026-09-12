@@ -1,0 +1,38 @@
+{
+  "sequence": "memorial-court-2019-03-16_0",
+  "role": "holdout_sensor_only_unscored",
+  "motion_source": "https://arxiv.org/html/1910.11792v4 (Figure 2d)",
+  "archives": {
+    "images": "train_images.zip",
+    "pointclouds": "train_pointclouds.zip",
+    "calibration": "train_calibration.zip"
+  },
+  "frame_counts": {
+    "image_stitched": 1089,
+    "image_0": 1089,
+    "image_2": 1089,
+    "image_4": 1089,
+    "image_6": 1089,
+    "image_8": 1089,
+    "upper_lidar": 1089,
+    "lower_lidar": 1089
+  },
+  "first_last_frame": [
+    "000000",
+    "001088"
+  ],
+  "all_sensor_frame_ids_match": true,
+  "uncompressed_selected_bytes": 1342359784,
+  "output": "data/jrdb2022/holdout_sensors/memorial-court-2019-03-16_0",
+  "manifest": "manifests/holdout_memorial_sensor_only.json",
+  "extracted": true,
+  "reference_archive_opened": false,
+  "reference_annotations_inspected": false,
+  "notes": [
+    "No 2D or 3D labels are opened, extracted, counted or scored.",
+    "Only preparation; final protocol must be frozen before inference/evaluation.",
+    "This outdoor scene tests a different location and environment.",
+    "Matching frame IDs do not establish acquisition-time synchronization.",
+    "Source bytes must stay outside Git."
+  ]
+}

@@ -19,6 +19,10 @@ SEQUENCE = "memorial-court-2019-03-16_0"
 STREAMS = {
     "image_stitched": ("images", "images/image_stitched", ".jpg"),
     "image_0": ("images", "images/image_0", ".jpg"),
+    "image_2": ("images", "images/image_2", ".jpg"),
+    "image_4": ("images", "images/image_4", ".jpg"),
+    "image_6": ("images", "images/image_6", ".jpg"),
+    "image_8": ("images", "images/image_8", ".jpg"),
     "upper_lidar": ("pointclouds", "pointclouds/upper_velodyne", ".pcd"),
     "lower_lidar": ("pointclouds", "pointclouds/lower_velodyne", ".pcd"),
 }
