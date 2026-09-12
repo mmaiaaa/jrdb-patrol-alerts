@@ -1,0 +1,13 @@
+# Cubberly raw-sensor projection audit (development record)
+
+Input code: commit `4956410` (compressed-PCD reader); development recording `cubberly-auditorium-2019-04-22_0`. Source labels, images and point clouds remain local and must not be copied into the public repository.
+
+The first projection attempt, using code from commit `97238b5`, generated no previews because all seven inspected upper-LiDAR PCD files use `DATA binary_compressed`. This was a parser limitation, not a finding about JRDB calibration. The revised reader in `4956410` decoded these files. The seven selected frames each contain between 18,831 and 19,287 points in the upper cloud; 5,552–5,835 projected inside native camera 0 using `calibration/lidars.yaml` (`upper2cam`, `distorted_img_K`, and `D`). These counts confirm decoding and forward projection, not geometric accuracy.
+
+Qualitative inspection of the seven local overlay images found visible laser-return structure on scene surfaces and pedestrians. The two foreground people in frame `001295` have clear overlaid returns; adjacent frames around candidate transitions have similar scan patterns. We did not measure pixel residuals, label-to-cloud 3D overlap, person-range error, image–LiDAR acquisition offsets, or whether every annotated person is in camera 0's field of view. The color legend's near/far ranges are measured from the **upper LiDAR**, while the exploratory encounter candidates use 3D label box-center XY distances. These are not interchangeable quantities.
+
+The original JRDB paper describes separate timestamp files in its data structure; those were not identified in the four downloaded JRDB 2022 archives during their initial inventory. A nominal frame rate does not prove frame-by-frame synchronization or seconds of exposure. Before scoring alert latency or false alerts per hour, obtain and check source timestamps if available, or explicitly mark frame-index analyses as exploratory.
+
+Next engineering step: cache raw, development-only 2D person detections across the five native cameras. Keep detector outputs and reference labels in separate modules. Verify projections and range estimation for the other cameras before using any 2D prediction as a robot-relative proximity alert. A five-camera detector throughput measurement is an offline workstation result, not an onboard robot speed claim.
+
+Primary sources: [JRDB original paper](https://arxiv.org/html/1910.11792v4); [JRDB coordinate conventions](https://github.com/JRDB-dataset/jrdb_toolkit); [PCD compressed format](https://pointclouds.org/documentation/tutorials/pcd_file_format.html).
