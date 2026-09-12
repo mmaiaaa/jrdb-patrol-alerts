@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Inspect stitched JRDB pose coverage and draw one local annotation overlay."""
+"""Inspect stitched JRDB pose coverage; overlay only when image dimensions agree."""
 import argparse
 import io
 import json
@@ -83,8 +83,67 @@ def main():
     if len(source_rows) != 1:
         raise ValueError("Selected frame has ambiguous pose image metadata")
     source = source_rows[0]
+
+    metadata_width = source.get("width")
+    coordinate_counts = Counter()
+    selected_frame_x = []
+    for annotation_frame, entries in annotated.items():
+        for entry in entries:
+            points = entry.get("keypoints")
+            if not isinstance(points, list) or len(points) % 3:
+                coordinate_counts["malformed_keypoint_lists"] += 1
+                continue
+            for x, y, v in zip(points[::3], points[1::3], points[2::3]):
+                if v not in (1, 2):
+                    continue
+                if not isinstance(x, (int, float)) or not isinstance(y, (int, float)):
+                    coordinate_counts["non_numeric_visible_or_occluded"] += 1
+                    continue
+                if not (math.isfinite(x) and math.isfinite(y)):
+                    coordinate_counts["non_finite_visible_or_occluded"] += 1
+                    continue
+                if annotation_frame == frame:
+                    selected_frame_x.append(x)
+                if x < 0 or y < 0:
+                    coordinate_counts["negative_x_or_y"] += 1
+                elif x >= image.width or y >= image.height:
+                    coordinate_counts["outside_jpeg_dimensions"] += 1
+                elif isinstance(metadata_width, (int, float)) and x >= metadata_width:
+                    coordinate_counts["inside_jpeg_beyond_metadata_width"] += 1
+                else:
+                    coordinate_counts["inside_metadata_width_and_jpeg"] += 1
+
+    report = {
+        "sequence": sequence,
+        "stitched_pose_member": member,
+        "stitched_pose_images": len(images),
+        "stitched_pose_unique_frames": len(image_frames),
+        "3d_label_frames_absent_from_pose_images_first_20": sorted(
+            {Path(name).stem for name in labels} - image_frames
+        )[:20],
+        "stitched_pose_annotations": len(annotations),
+        "stitched_pose_frames_with_annotations": len(annotated),
+        "annotations_with_unresolved_image_id": missing_image_ids,
+        "annotation_field_counts": dict(sorted(annotation_fields.items())),
+        "category_counts": dict(sorted(category_counts.items())),
+        "pose_image_metadata_sizes": dict(Counter(
+            f"{row.get('width')}x{row.get('height')}" for row in images
+        )),
+        "near_3m_3d_observations": sum(map(len, nearby.values())),
+        "near_3m_same_frame_numeric_pose_track_matches": sum(matches_by_frame.values()),
+        "selected_frame": frame,
+        "selected_frame_annotations": len(annotated[frame]),
+        "selected_frame_pose_metadata_size": [source.get("width"), source.get("height")],
+        "selected_frame_jpeg_size": list(image.size),
+        "selected_frame_visible_or_occluded_x_min_max": [min(selected_frame_x), max(selected_frame_x)] if selected_frame_x else None,
+        "visible_or_occluded_keypoint_coordinate_counts": dict(sorted(coordinate_counts.items())),
+        "overlay_path": None,
+        "note": "A 752-wide pose row for a 3760-wide stitched JPEG is a metadata discrepancy, not proof of the keypoint coordinate convention. No visibility event labels are defined here.",
+    }
     if (source.get("width"), source.get("height")) != image.size:
-        raise ValueError(f"Image dimension mismatch: pose row={source} JPEG={image.size}")
+        report["overlay_status"] = "skipped_dimension_mismatch"
+        print(json.dumps(report, indent=2))
+        return
 
     draw = ImageDraw.Draw(image)
     drawn_keypoints = 0
@@ -115,27 +174,9 @@ def main():
     args.output_dir.mkdir(parents=True, exist_ok=True)
     overlay = args.output_dir / f"{sequence}_stitched_pose_{frame}.png"
     image.save(overlay)
-    report = {
-        "sequence": sequence,
-        "stitched_pose_member": member,
-        "stitched_pose_images": len(images),
-        "stitched_pose_unique_frames": len(image_frames),
-        "3d_label_frames_absent_from_pose_images_first_20": sorted(
-            {Path(name).stem for name in labels} - image_frames
-        )[:20],
-        "stitched_pose_annotations": len(annotations),
-        "stitched_pose_frames_with_annotations": len(annotated),
-        "annotations_with_unresolved_image_id": missing_image_ids,
-        "annotation_field_counts": dict(sorted(annotation_fields.items())),
-        "category_counts": dict(sorted(category_counts.items())),
-        "near_3m_3d_observations": sum(map(len, nearby.values())),
-        "near_3m_same_frame_numeric_pose_track_matches": sum(matches_by_frame.values()),
-        "overlay_frame": frame,
-        "overlay_annotations": len(annotated[frame]),
-        "overlay_visible_or_occluded_keypoints": drawn_keypoints,
-        "overlay_path": str(overlay),
-        "note": "Pose labels are incomplete for visibility; numeric ID matching and keypoint alignment require visual verification. Do not commit the overlay or raw JRDB data.",
-    }
+    report["overlay_status"] = "generated_metadata_dimensions_match"
+    report["overlay_path"] = str(overlay)
+    report["overlay_visible_or_occluded_keypoints"] = drawn_keypoints
     print(json.dumps(report, indent=2))
 
 
