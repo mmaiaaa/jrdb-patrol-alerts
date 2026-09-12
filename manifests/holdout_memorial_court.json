@@ -1,0 +1,19 @@
+{
+  "protocol": "JRDB frozen cross-recording range comparison",
+  "role": "primary independent location holdout",
+  "sequence": "memorial-court-2019-03-16_0",
+  "development_sequence": "cubberly-auditorium-2019-04-22_0",
+  "method_freeze_commit": "3f9a8daadb832a6c6ea9251869b83be2a28c2746",
+  "method_freeze_tag": "jrdb-method-freeze-2026-09-12",
+  "selection_rule": "location selected before inspection of frozen-method outcomes",
+  "method_changes_allowed": false,
+  "notes": [
+    "Frozen depth-band settings must not change.",
+    "Nearest-return baseline must not change.",
+    "The near/far boundary remains 3.0 m.",
+    "Annotation eligibility remains frozen.",
+    "Candidate abstentions remain abstentions.",
+    "Unlinked detector boxes remain a separate category.",
+    "No temporal-alert or robot-latency claims are evaluated."
+  ]
+}
