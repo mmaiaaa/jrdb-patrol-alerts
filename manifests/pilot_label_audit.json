@@ -1,0 +1,44 @@
+{
+  "sequence": "bytes-cafe-2019-02-07_0",
+  "source_label_file": "data/jrdb2022/pilot/bytes-cafe-2019-02-07_0/labels/labels_3d/bytes-cafe-2019-02-07_0.json",
+  "number_of_annotated_frames": 1726,
+  "category_observations": {
+    "pedestrian": 39567
+  },
+  "pedestrian_observations": 39567,
+  "pedestrian_ids": 37,
+  "frames_with_pedestrians": 1726,
+  "attribute_observations": {
+    "interpolated=False": 17,
+    "interpolated=True": 39550,
+    "no_eval=False": 38169,
+    "no_eval=True": 1398,
+    "num_points_zero=False": 38339,
+    "num_points_zero=True": 1228
+  },
+  "box_xy_vs_attribute_distance_differences_over_0_5m": 0,
+  "descriptive_xy_radius_m": {
+    "2.0": {
+      "all_box_observations": 6919,
+      "no_eval_false": 6919,
+      "no_eval_false_and_num_points_positive": 6919
+    },
+    "3.0": {
+      "all_box_observations": 14518,
+      "no_eval_false": 14518,
+      "no_eval_false_and_num_points_positive": 14518
+    },
+    "5.0": {
+      "all_box_observations": 25504,
+      "no_eval_false": 25504,
+      "no_eval_false_and_num_points_positive": 25488
+    }
+  },
+  "limitations": [
+    "Counts are person-frame observations, not independent encounters or alerts.",
+    "XY box center distance is exploratory; coordinate frames must be verified.",
+    "Labels cover 360 degrees; camera-0 visibility is not yet assessed.",
+    "no_eval, interpolation, and point-count fields are reported separately.",
+    "Recording time, raw-sensor inference, and moving-robot status are not established here."
+  ]
+}

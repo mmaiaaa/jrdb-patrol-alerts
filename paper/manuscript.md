@@ -105,3 +105,7 @@ Write the conclusion after the empirical questions above are answered. It should
 | Complete pipeline runs in real time onboard | None | End-to-end measurements on intended hardware |
 
 Bibliographic starting entries are in `references.bib`. Author metadata, target-journal style, complete related work, and measured study details remain unfinished.
+
+### Pilot annotation audit (preliminary)
+
+In the stationary indoor bytes-cafe-2019-02-07_0 sequence, 1,726 frame identifiers align across camera 0, both LiDAR streams, and the 3D annotation file. The file contains 39,567 pedestrian-frame observations from 37 pedestrian IDs. Exploratory 3D box-center distance calculations identify 14,518 observations within 3 m, all marked no_eval=false and with a positive LiDAR point count. These are repeated frame observations, not independently labeled proximity encounters. The interpolated attribute is true for 39,550 of 39,567 observations; its distribution in this JRDB 2022 file requires investigation before establishing the reference-event protocol. Camera-0 visibility, coordinate transforms, and recording time remain to be validated. No detector or alert performance is claimed from this audit.
