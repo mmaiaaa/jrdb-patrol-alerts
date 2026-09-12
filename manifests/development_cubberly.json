@@ -1,0 +1,28 @@
+{
+  "sequence": "cubberly-auditorium-2019-04-22_0",
+  "role": "development_only",
+  "moving_source": "https://arxiv.org/html/1910.11792v4 (Figure 2)",
+  "frame_counts": {
+    "image_stitched": 1296,
+    "image_0": 1296,
+    "upper_lidar": 1296,
+    "lower_lidar": 1296
+  },
+  "label_3d": "labels/labels_3d/cubberly-auditorium-2019-04-22_0.json",
+  "pose_stitched": "labels/labels_2d_pose_stitched_coco/cubberly-auditorium-2019-04-22_0.json",
+  "all_frame_ids_match": true,
+  "pilot_radius_m": 3.0,
+  "frames_with_evaluable_3m_person": 1058,
+  "frames_without_evaluable_3m_person": 238,
+  "frames_with_3m_person_marked_no_eval": 0,
+  "uncompressed_selected_bytes": 1330982216,
+  "output": "data/jrdb2022/development/cubberly-auditorium-2019-04-22_0",
+  "manifest": "manifests/development_cubberly.json",
+  "extracted": true,
+  "cautions": [
+    "Candidate person-free frames are not independently verified negatives.",
+    "This is a development recording only; no held-out recordings are inspected.",
+    "Frame IDs do not establish timestamps or calibrated LiDAR/image projection.",
+    "No images, labels or clouds should be added to Git."
+  ]
+}
