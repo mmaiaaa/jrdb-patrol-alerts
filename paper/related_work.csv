@@ -1,0 +1,4 @@
+key,source_url,source_inspected,verified_relevance,remaining_review
+martin2021jrdb,https://arxiv.org/abs/1910.11792,official abstract and dataset documentation,robot-perspective human perception and JRDB data,confirm exact release protocol and finalize bibliography
+prykhodchenko2020guard,https://home.deec.uc.pt/~rprocha/publications_ficheiros/PRC20-ICARSC20.html,author publication page and abstract,multisensor guard-patrol people detection and adaptive computation,read full method and evaluation before detailed comparison
+saadatnejad2023jrdbtraj,https://arxiv.org/abs/2311.02736,official abstract,end-to-end forecasting under imperfect preceding perception,read full paper if using it for methodological comparison

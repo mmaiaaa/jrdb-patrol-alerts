@@ -8,6 +8,8 @@ No JRDB sequence was downloaded or selected. No inference, localization, event e
 
 GitHub upload is pending an authenticated connection. Local commit history is the initial provenance record and can be pushed unchanged.
 
+M0 manuscript increment: drafted motivation, initial source-grounded positioning, proposed task/method/evaluation prose, result placeholders, and an evidence ledger. The input foundation commit is `4fff48f`. The environment utility and JSON/CSV syntax were checked in the workspace; these are scaffold checks, not measurements of the user's laptop or scientific pipeline validation.
+
 Use this entry shape for every actual experiment:
 
 ```text
