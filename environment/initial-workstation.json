@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "recorded_utc": "2026-09-12T11:52:47.784799+00:00",
+  "python_version": "3.14.4",
+  "python_implementation": "CPython",
+  "os": {
+    "system": "Linux",
+    "release": "7.0.0-31-generic",
+    "architecture": "x86_64"
+  },
+  "cpu": {
+    "model": "12th Gen Intel(R) Core(TM) i7-12700",
+    "logical_count": 20
+  },
+  "memory_total_bytes": 15952388096,
+  "current_filesystem": {
+    "total_bytes": 513801388032,
+    "used_bytes": 11992584192,
+    "free_bytes": 475633938432
+  },
+  "nvidia": {
+    "status": "tool_unavailable",
+    "devices": []
+  },
+  "notes": [
+    "This records the computer where the script was executed.",
+    "A missing NVIDIA tool does not prove no NVIDIA GPU is installed.",
+    "No detector inference or performance benchmark is performed.",
+    "Other GPU backends and non-Linux memory queries are not implemented.",
+    "Dependency locks and model hashes are recorded with actual runs later."
+  ]
+}
