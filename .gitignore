@@ -1,0 +1,56 @@
+# Local Python environments and caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+
+# Local settings and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials*.json
+token*.json
+configs/local.*
+
+# Dataset bytes stay outside version control
+/data/*
+!/data/README.md
+/downloads/
+/datasets/
+/weights/
+/cache/
+/runs/
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.onnx
+*.engine
+*.bag
+*.mcap
+*.pcd
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.7z
+
+# Large or machine-specific outputs
+/outputs/local/
+/outputs/raw/
+/outputs/predictions/
+/outputs/visuals/
+
+# Editor and OS files
+.DS_Store
+.idea/
+.vscode/
+*~

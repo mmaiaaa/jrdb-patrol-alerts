@@ -1,0 +1,3 @@
+# M0 uses Python 3.10+ and the standard library only.
+# No perception packages have been selected or installed for this project.
+# Add and lock the tested dependencies during the sensor-pilot milestone.

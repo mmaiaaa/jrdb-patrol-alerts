@@ -1,0 +1,1 @@
+run_id,method_id,recording_group,monitored_seconds,reference_events,emitted_alerts,true_alerts,false_alerts,duplicate_false_alerts,missed_events,timely_true_alerts,precision,recall,false_alerts_per_hour,median_entry_delay_s,p95_entry_delay_s,notes

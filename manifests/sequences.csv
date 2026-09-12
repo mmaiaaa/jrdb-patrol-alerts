@@ -1,0 +1,1 @@
+manifest_row_id,dataset_release,sequence_id,recording_group,split,sensor_selection,first_frame_id,last_frame_id,start_timestamp_s,end_timestamp_s,monitored_seconds,source_archive_sha256,annotation_sha256,calibration_sha256,exclusion_note

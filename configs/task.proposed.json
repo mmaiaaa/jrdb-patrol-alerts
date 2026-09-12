@@ -1,0 +1,39 @@
+{
+  "protocol_id": "jrdb-patrol-v0",
+  "status": "draft_not_frozen",
+  "task": "robot_relative_person_proximity",
+  "illustrative_values_only": true,
+  "candidate_geometry": {
+    "coordinate_frame": "robot_horizontal_frame_to_be_verified",
+    "distance_statistic": "horizontal_person_center_distance",
+    "radius_m": 3.0,
+    "minimum_occupancy_s": 0.5
+  },
+  "reference_event_rules": {
+    "boundary_inclusive": null,
+    "annotation_gap_policy": null,
+    "initial_occupancy_policy": null,
+    "event_end_and_reentry_policy": null,
+    "end_of_recording_policy": null,
+    "field_of_view_and_eligibility": null
+  },
+  "matching": {
+    "assignment": "gated_maximum_cardinality_then_minimum_cost",
+    "time_gate_s": null,
+    "spatial_gate_m": null,
+    "early_and_late_alert_policy": null
+  },
+  "primary_operating_requirements": {
+    "minimum_recall": null,
+    "maximum_delay_s": null,
+    "timely_recall_definition": null,
+    "recall_noninferiority_margin": null
+  },
+  "freeze_record": {
+    "date": null,
+    "code_commit": null,
+    "dataset_manifest_sha256": null,
+    "primary_comparator": null,
+    "test_access_record": null
+  }
+}

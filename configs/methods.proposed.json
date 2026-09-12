@@ -1,0 +1,21 @@
+{
+  "status": "unimplemented_proposals",
+  "shared_perception": {
+    "detector": null,
+    "tracker": null,
+    "weights_sha256": null,
+    "metric_localization": null,
+    "camera_selection": null,
+    "input_sampling_policy": null
+  },
+  "methods": [
+    {"id": "B0", "name": "raw_entry_threshold", "parameters": null},
+    {"id": "B1", "name": "time_persistence", "parameters": null},
+    {"id": "B2", "name": "hysteresis_and_per_id_cooldown", "parameters": null},
+    {"id": "B3", "name": "causal_spatial_temporal_memory", "parameters": null},
+    {"id": "P0", "name": "uncertainty_aware_encounter_memory", "parameters": null}
+  ],
+  "validation_tuning_budget": null,
+  "ablation_definitions": null,
+  "uncertainty_calibration_procedure": null
+}
