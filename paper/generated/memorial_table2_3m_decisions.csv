@@ -1,0 +1,3 @@
+method,reference_near_predicted_near,reference_near_predicted_far,reference_far_predicted_near,reference_far_predicted_far,abstain_or_unavailable,available
+Depth-band candidate,820,10,179,11345,892,12354
+Nearest supported surface,835,7,422,11728,254,12992

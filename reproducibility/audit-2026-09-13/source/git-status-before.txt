@@ -1,0 +1,6 @@
+?? paper/generated/
+?? reproducibility/
+?? scripts/final_research_sanity_check.py
+?? scripts/make_memorial_holdout_figures.py
+?? scripts/make_memorial_holdout_paper_tables.py
+?? scripts/make_memorial_paper_result_figure.py

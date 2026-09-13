@@ -1,0 +1,2 @@
+paired_cases,depth_band_lower_discrepancy,nearest_lower_discrepancy,equal_discrepancy,depth_band_only_agrees_at_3m,nearest_only_agrees_at_3m,both_agree_at_3m,neither_agrees_at_3m,method_3m_disagreements
+12354,1841,5,10508,225,3,11940,186,228

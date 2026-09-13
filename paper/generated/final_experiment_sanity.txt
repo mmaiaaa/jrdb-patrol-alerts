@@ -1,0 +1,175 @@
+==============================================================================
+FINAL JRDB RESEARCH SANITY CHECK
+==============================================================================
+
+--- 1. GIT / METHOD FREEZE ---
+[PASS] Method-freeze tag resolves to expected commit — 3f9a8daadb832a6c6ea9251869b83be2a28c2746
+[PASS] Current work descends from method freeze
+[PASS] Frozen method source unchanged — scripts/cache_jrdb_native_detections.py
+[PASS] Frozen method source unchanged — scripts/cache_jrdb_dev_sensor_depth_candidates.py
+[PASS] Frozen method source unchanged — scripts/evaluate_jrdb_dev_surface_candidates_offline.py
+[PASS] Frozen method source unchanged — scripts/audit_jrdb_cubberly_projection.py
+[PASS] Frozen method source unchanged — scripts/audit_jrdb_dev_box_geometry.py
+[PASS] Frozen method source unchanged — scripts/audit_jrdb_box_depth_support.py
+[PASS] Frozen method source unchanged — scripts/review_jrdb_native_detections.py
+[FAIL] Raw data and local outputs remain outside Git — data/README.md
+outputs/README.md
+[WARN] Working tree is not clean — This is acceptable for new paper figures/scripts, but commit them before submission.
+?? paper/generated/
+?? scripts/final_research_sanity_check.py
+?? scripts/make_memorial_holdout_figures.py
+?? scripts/make_memorial_holdout_paper_tables.py
+?? scripts/make_memorial_paper_result_figure.py
+
+--- 2. DETECTOR PROVENANCE ---
+[PASS] Required file exists — yolov8n.pt
+[PASS] YOLOv8n weight hash — f59b3d833e2ff32e194b5bb8e08d211dc7c5bdf144b90d2c8412c47ccfc83b36
+[PASS] Required file exists — outputs/local/cubberly_native_full.jsonl
+[PASS] Frozen Cubberly prediction hash — 2e13fa212e647561765f0cc203ec60fd658e6377c6a7c655200700beddc56a16
+[PASS] Required file exists — outputs/local/memorial_court_holdout/memorial_native_full.jsonl
+[PASS] Memorial prediction hash — d2d86947287c3e05654c8ec9913445990bebcb3b36b1b9cc841e1d593df36f13
+[PASS] Required file exists — outputs/local/memorial_court_holdout/memorial_native_detection_summary.json
+[PASS] Memorial detector sequence
+[PASS] Memorial detector role
+[PASS] Memorial detector frame count — 1089
+[PASS] Memorial detector five-camera row count — 5445
+[PASS] Memorial detector settings frozen — {'imgsz': 640, 'confidence': 0.1, 'iou': 0.7, 'device': '0', 'class_id': 0, 'stream_order': 'frame then camera', 'batch_size': 1}
+[PASS] Memorial detector uses frozen YOLO weights — f59b3d833e2ff32e194b5bb8e08d211dc7c5bdf144b90d2c8412c47ccfc83b36
+
+--- 3. HUMAN BLINDED REVIEW ---
+[PASS] Required file exists — research_records/cubberly_blinded_review/reviewer_a_completed.xlsx
+[PASS] Official completed reviewer workbook hash — ceff3fbb2187c96d0fc3582792d0e6eaaadece2a4e71179c1f7916846a97e9b8
+[WARN] openpyxl unavailable; workbook content counts not rechecked
+
+--- 4. MEMORIAL COURT SENSOR STAGING ---
+[PASS] Required file exists — manifests/holdout_memorial_sensor_only.json
+[PASS] Holdout sequence identity
+[PASS] Holdout sensor role
+[PASS] Sensor extraction completed
+[PASS] All expected Memorial streams present — ['image_0', 'image_2', 'image_4', 'image_6', 'image_8', 'image_stitched', 'lower_lidar', 'upper_lidar']
+[PASS] Every Memorial sensor stream has 1089 frames — {'image_stitched': 1089, 'image_0': 1089, 'image_2': 1089, 'image_4': 1089, 'image_6': 1089, 'image_8': 1089, 'upper_lidar': 1089, 'lower_lidar': 1089}
+[PASS] Sensor frame IDs matched before scoring
+[PASS] Reference archive unopened during sensor staging
+
+--- 5. RANGE METHOD FREEZE ---
+[PASS] Required file exists — scripts/cache_jrdb_dev_sensor_depth_candidates.py
+[PASS] Required file exists — scripts/cache_jrdb_holdout_sensor_depth_candidates.py
+[PASS] Frozen range constant BIN_WIDTH_M — dev=0.5, holdout=0.5
+[PASS] Frozen range constant MAX_RANGE_M — dev=20.0, holdout=20.0
+[PASS] Frozen range constant MIN_BIN_POINTS — dev=3, holdout=3
+[PASS] Frozen range constant MIN_BAND_POINTS — dev=8, holdout=8
+[PASS] Frozen range constant DOMINANCE_RATIO — dev=2.0, holdout=2.0
+[PASS] Holdout uses identical frozen function: project_ego_xy
+[PASS] Holdout uses identical frozen function: surface_bands
+[PASS] Holdout uses identical frozen function: evaluate_box
+
+--- 6. MEMORIAL SENSOR CANDIDATES ---
+[PASS] Required file exists — outputs/local/memorial_court_holdout/memorial_sensor_surface_full.csv
+[PASS] Memorial candidate CSV hash — 8d3bd65efdc9fc1033cc611a38c67653ada8971a0eef1b9f5332847aabce9e51
+[PASS] Required file exists — outputs/local/memorial_court_holdout/memorial_sensor_surface_summary.json
+[PASS] Candidate sequence
+[PASS] Candidate output still marked unvalidated sensor-side
+[PASS] Candidate method role remained sensor-only
+[PASS] Candidate detector hash linkage
+[PASS] Candidate numerical settings match freeze — {'bin_width_m': 0.5, 'min_points_per_bin': 3, 'min_points_per_candidate_band': 8, 'dominance_ratio': 2.0, 'max_ego_xy_radius_m': 20.0}
+[PASS] Sensor candidate status counts — {'single_supported_surface_candidate': 11502, 'dominant_surface_candidate': 6098, 'insufficient_supported_surface': 6554, 'ambiguous_surface_abstain': 838}
+[PASS] Sensor candidate totals sum to 24,992 detector boxes — 24992
+
+--- 7. PRE-REFERENCE OUTPUT FREEZE ---
+[PASS] Required file exists — manifests/memorial_court_sensor_output_freeze.json
+[PASS] Sensor outputs were frozen before reference opening
+[PASS] Frozen detector hash recorded correctly
+[PASS] Frozen candidate hash recorded correctly
+
+--- 8. HOLDOUT EVALUATOR FREEZE ---
+[PASS] Required file exists — scripts/evaluate_jrdb_dev_surface_candidates_offline.py
+[PASS] Required file exists — scripts/evaluate_jrdb_holdout_surface_candidates_offline.py
+[PASS] Frozen evaluator constant CAMERAS — dev=(0, 2, 4, 6, 8), holdout=(0, 2, 4, 6, 8)
+[PASS] Frozen evaluator constant MIN_IOU — dev=0.5, holdout=0.5
+[PASS] Frozen evaluator constant NEAR_RADIUS_M — dev=3.0, holdout=3.0
+[PASS] Holdout evaluator uses frozen function: optional_float
+[PASS] Holdout evaluator uses frozen function: match_one_to_one
+[PASS] Holdout evaluator uses frozen function: rate_stats
+[PASS] Required file exists — manifests/holdout_memorial_scoring.json
+[PASS] Scoring manifest tied to method freeze
+[PASS] Scoring IoU frozen at 0.5
+[PASS] Scoring range boundary frozen at 3.0 m
+[PASS] Post-reference tuning explicitly prohibited
+
+--- 9. MEMORIAL HOLDOUT SCORING ---
+[PASS] Required file exists — outputs/local/memorial_court_holdout/memorial_holdout_evaluation_summary.json
+[PASS] Evaluation status is frozen holdout
+[PASS] Evaluation role is frozen holdout scoring
+[PASS] Frozen candidate CSV used for scoring
+[PASS] Required file exists — outputs/local/memorial_court_holdout/memorial_sensor_surface_summary.json
+[PASS] Candidate summary hash linked to evaluation — 39ed9d9605bc891bce23dc6b38ac15da7a666e65a94606e0ca6bbc3f2767dad0
+[PASS] Memorial 3D reference hash — abb7befbb8949d307d12bcf38187787cc4928f2a1572327f2b79c71c71d1a723
+[PASS] Five native 2D reference members hash — 5e065fcd1b1a2d92348e3b94c5f09fe0b2e6e29d6ed3e005bcf29e1a616042ab
+[PASS] Evaluation population counts — {'detector_boxes': 24992, 'evaluable_2d_labels': 18390, 'matched_2d_boxes': 13349, 'matched_2d_and_evaluable_3d': 13246, '2d_no_eval_or_unknown': 7476, 'matches_without_evaluable_3d': 103}
+[PASS] 2D matched minus missing-3D equals scored population
+[PASS] Matched evaluable 3D population
+[PASS] Candidate available pairs
+[PASS] Nearest available pairs
+[PASS] Holdout median discrepancies
+[PASS] Holdout mean discrepancies
+[PASS] >1 m discrepancy counts
+
+--- 10. FINAL REPORTING ARITHMETIC ---
+[PASS] Required file exists — outputs/local/memorial_court_holdout/memorial_holdout_reporting.json
+[PASS] Final reporting JSON hash — d23e899bf7a7fa9e36b51057de1e381a0b1fba81a1092da08a760696d1bfdd10
+[PASS] Required file exists — outputs/local/memorial_court_holdout/memorial_surface_reference_holdout.csv
+[PASS] Reporting file linked to exact scored CSV — 2b528ca8b5d9e4efd99fc0abd8ef7a095e67ee38c3d6a6da084b4e046ff7c148
+[PASS] Final scored population
+[PASS] Reference near/far counts — {'near_or_equal_3m': 842, 'farther_than_3m': 12404}
+[PASS] Candidate coverage counts
+[PASS] Nearest coverage counts
+[PASS] Depth-band 3 m confusion counts
+[PASS] Depth-band available-decision arithmetic
+[PASS] Nearest 3 m confusion counts
+[PASS] Nearest available-decision arithmetic
+[PASS] Paired discrepancy population
+[PASS] Paired win/tie arithmetic
+[PASS] Paired discrepancy values
+[PASS] Paired 3 m agreement arithmetic
+[PASS] All 228 method disagreements are candidate-far/nearest-near
+[PASS] Detector linkage arithmetic
+[PASS] Reference linkage arithmetic
+
+--- 11. PAPER TABLE ARTIFACTS ---
+[PASS] Paper table artifact exists — paper/generated/memorial_table1_range_comparison.csv
+[PASS] Paper table artifact exists — paper/generated/memorial_table2_3m_decisions.csv
+[PASS] Paper table artifact exists — paper/generated/memorial_table3_paired_comparison.csv
+[PASS] Paper table artifact exists — paper/generated/memorial_table4_linkage.csv
+[PASS] Paper table artifact exists — paper/generated/memorial_holdout_tables.md
+
+--- 12. SCIENTIFIC RESULT SUMMARY ---
+Depth-band coverage: 93.27%
+Nearest coverage: 98.08%
+Far-reference -> near decisions: 179 depth-band vs 422 nearest
+Raw reduction in far->near counts: 57.6% (interpret with coverage difference)
+Paired discrepancy comparison: depth-band better 1841, nearest better 5, equal 10508
+Paired 3 m disagreements: 225 favor depth-band, 3 favor nearest
+Near-reference decisions: depth-band 820 near / 10 far / 12 unavailable; nearest 835 near / 7 far / 0 unavailable
+Human review: 66 enriched diagnostic cases; descriptive only, not an accuracy estimate.
+
+--- 13. CLAIM-SAFETY CHECKLIST ---
+[MANUAL] Do NOT call 0.076 m a direct person-distance error; it is surface-to-annotated-center discrepancy.
+[MANUAL] Do NOT report 225/228 as general accuracy; it applies only to paired cases where the methods disagreed.
+[MANUAL] Do NOT call unlinked detector boxes false positives without independent annotation establishing that.
+[MANUAL] Do NOT convert the enriched 66-case blinded review into an accuracy percentage.
+[MANUAL] Do NOT claim temporal alert accuracy, event latency, tracker performance, or robot end-to-end latency.
+[MANUAL] State that adjacent frames/cameras/repeated persons are statistically dependent.
+[MANUAL] State that only one location-separated independent holdout recording was scored.
+[MANUAL] State the coverage trade-off: depth-band abstains more often.
+[MANUAL] Mention the strong class imbalance: 842 near references vs 12,404 far references.
+[MANUAL] Mention camera-specific limitations, including no matched <=3 m references for camera 2 in the holdout.
+
+==============================================================================
+FINAL VERDICT
+==============================================================================
+PASS checks: 109
+WARNINGS:    2
+FAILURES:    1
+
+EXPERIMENT CLOSURE: FAIL
+Do not finalize the manuscript until the failures above are understood. Do not rerun/tune automatically.

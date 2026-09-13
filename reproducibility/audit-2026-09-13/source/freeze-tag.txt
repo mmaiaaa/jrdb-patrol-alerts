@@ -1,0 +1,13 @@
+tag jrdb-method-freeze-2026-09-12
+Tagger:     mmaiaaa <maya.alasbahi@outlook.com>
+TaggerDate: Sun Sep 13 00:15:27 2026 +0400
+
+Frozen JRDB range-comparison protocol before cross-recording evaluation
+
+commit 3f9a8daadb832a6c6ea9251869b83be2a28c2746
+Author:     mmaiaaa <maya.alasbahi@outlook.com>
+AuthorDate: Sun Sep 13 00:15:27 2026 +0400
+Commit:     mmaiaaa <maya.alasbahi@outlook.com>
+CommitDate: Sun Sep 13 00:15:27 2026 +0400
+
+    research: freeze JRDB Cubberly protocol before cross-recording evaluation

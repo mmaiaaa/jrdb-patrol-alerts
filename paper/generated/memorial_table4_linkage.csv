@@ -1,0 +1,2 @@
+detector_boxes,matched_2d_boxes,unlinked_detector_boxes,evaluable_2d_labels,unmatched_evaluable_2d_labels,matches_without_evaluable_3d,reference_within_or_equal_3m,reference_farther_than_3m
+24992,13349,11643,18390,5041,103,842,12404
